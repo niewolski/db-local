@@ -55,3 +55,11 @@ Host zawsze `localhost`, port to zmienna `*_PORT` z `.env` (w nawiasie wartość
 - Użytkownik / hasło: `MONGO_USER` / `MONGO_PASSWORD` (to konto root, zapisane w bazie `admin`)
 - Baza: `MONGO_DATABASE` (domyślna baza dla skryptów startowych, sama baza pojawi się przy pierwszym zapisie)
 - URL: `mongodb://user:pass@localhost:27017/db?authSource=admin`
+
+## Panele do przeglądania baz
+
+### Adminer
+Jeden lekki panel w przeglądarce dla PostgreSQL, MySQL i MariaDB.
+- Adres: http://localhost:8080 (`ADMINER_PORT`)
+- Logowanie: wybierz system, jako **Serwer** wpisz nazwę usługi z compose (`postgres`, `mysql`, `mariadb`), a nie `localhost`, bo Adminer działa w swoim kontenerze
+- Do SQL Server i MongoDB użyj innego narzędzia (np. DBeaver, MongoDB Compass)
