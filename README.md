@@ -43,3 +43,9 @@ Host zawsze `localhost`, port to zmienna `*_PORT` z `.env` (w nawiasie wartość
 - Baza: obraz nie tworzy bazy sam, utwórz ją po starcie (`CREATE DATABASE nazwa;`)
 - Connection string: `Server=localhost,1433;User Id=sa;Password=...;TrustServerCertificate=True`
 - Edycja Developer (darmowa do developmentu). Obraz jest tylko na amd64, na Macu z M-chipem działa przez emulację, więc wolniej.
+
+### Redis
+- Port: `REDIS_PORT` (6379)
+- Hasło: `REDIS_PASSWORD` (bez użytkownika, logujesz się jako `default`)
+- Dane zapisywane na dysk (AOF), więc przetrwają restart kontenera
+- URL: `redis://:pass@localhost:6379/0`
