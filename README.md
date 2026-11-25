@@ -49,3 +49,9 @@ Host zawsze `localhost`, port to zmienna `*_PORT` z `.env` (w nawiasie wartość
 - Hasło: `REDIS_PASSWORD` (bez użytkownika, logujesz się jako `default`)
 - Dane zapisywane na dysk (AOF), więc przetrwają restart kontenera
 - URL: `redis://:pass@localhost:6379/0`
+
+### MongoDB
+- Port: `MONGO_PORT` (27017)
+- Użytkownik / hasło: `MONGO_USER` / `MONGO_PASSWORD` (to konto root, zapisane w bazie `admin`)
+- Baza: `MONGO_DATABASE` (domyślna baza dla skryptów startowych, sama baza pojawi się przy pierwszym zapisie)
+- URL: `mongodb://user:pass@localhost:27017/db?authSource=admin`
