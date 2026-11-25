@@ -60,7 +60,6 @@ services:
   #     retries: 10
 
   # =================== SQL Server =====================
-  # # Obraz jest tylko na amd64: na Macu z M-chipem działa przez emulację (Rosetta w Docker Desktop)
   # sqlserver:
   #   image: mcr.microsoft.com/mssql/server:2022-latest
   #   platform: linux/amd64
@@ -119,8 +118,6 @@ services:
   #     retries: 10
 
   # ===================== Adminer ======================
-  # # Panel www dla PostgreSQL / MySQL / MariaDB: http://localhost:8080
-  # # Jako "Serwer" wpisz nazwę usługi z tego pliku: postgres, mysql albo mariadb
   # adminer:
   #   image: adminer
   #   container_name: adminer-local
@@ -129,8 +126,6 @@ services:
   #     - "${ADMINER_PORT:-8080}:8080"
 
   # ===================== pgAdmin ======================
-  # # Panel www dla PostgreSQL: http://localhost:5050
-  # # Przy dodawaniu serwera jako host wpisz: postgres
   # pgadmin:
   #   image: dpage/pgadmin4
   #   container_name: pgadmin-local
@@ -144,10 +139,10 @@ services:
   #     - pgadmin_data:/var/lib/pgadmin
 
 # volumes:
-#   postgres_data:   # PostgreSQL
-#   mysql_data:      # MySQL
-#   mariadb_data:    # MariaDB
-#   sqlserver_data:  # SQL Server
-#   redis_data:      # Redis
-#   mongodb_data:    # MongoDB
-#   pgadmin_data:    # pgAdmin
+#   postgres_data:
+#   mysql_data:
+#   mariadb_data:
+#   sqlserver_data:
+#   redis_data:
+#   mongodb_data:
+#   pgadmin_data:

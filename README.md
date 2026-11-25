@@ -1,71 +1,37 @@
 # postgres-local
 
-Szablon lokalnych baz danych w Dockerze. Każda baza to osobny, zakomentowany blok w `docker-compose.yml`: odkomentowujesz te, których potrzebujesz (jedną albo kilka naraz).
+Docker Compose template for local databases. Every service in `docker-compose.yml` is commented out, so you uncomment only the ones you need.
 
-## Jak użyć
+## Usage
 
-1. Skopiuj plik ze zmiennymi:
+1. Copy the env file and fill in the section for your database:
    ```bash
    cp .env.example .env
    ```
-2. W `.env` uzupełnij sekcję bazy, której używasz.
-3. W `docker-compose.yml` odkomentuj blok tej bazy **oraz** jej wolumen w sekcji `volumes:` na dole.
-4. Uruchom:
+2. In `docker-compose.yml`, uncomment the service **and** its volume at the bottom.
+3. Start it:
    ```bash
    docker compose up -d
    ```
 
-## Bazy
+## Services
 
-Host zawsze `localhost`, port to zmienna `*_PORT` z `.env` (w nawiasie wartość domyślna).
+| Service | Port | Login |
+|---|---|---|
+| PostgreSQL | 5432 | `POSTGRES_USER` / `POSTGRES_PASSWORD` |
+| MySQL | 3306 | `MYSQL_USER` / `MYSQL_PASSWORD` |
+| MariaDB | 3307 | `MARIADB_USER` / `MARIADB_PASSWORD` |
+| SQL Server | 1433 | `sa` / `MSSQL_SA_PASSWORD` |
+| Redis | 6379 | `REDIS_PASSWORD` |
+| MongoDB | 27017 | `MONGO_USER` / `MONGO_PASSWORD` |
+| Adminer | [8080](http://localhost:8080) | any SQL database above |
+| pgAdmin | [5050](http://localhost:5050) | `PGADMIN_EMAIL` / `PGADMIN_PASSWORD` |
 
-### PostgreSQL
-- Port: `POSTGRES_PORT` (5432)
-- Użytkownik / hasło: `POSTGRES_USER` / `POSTGRES_PASSWORD`
-- Baza: `POSTGRES_DB`
-- URL: `postgresql://user:pass@localhost:5432/db`
+Ports can be changed with the `*_PORT` variables in `.env`.
 
-### MySQL
-- Port: `MYSQL_PORT` (3306)
-- Użytkownik / hasło: `MYSQL_USER` / `MYSQL_PASSWORD` (root: `MYSQL_ROOT_PASSWORD`)
-- Baza: `MYSQL_DATABASE`
-- URL: `mysql://user:pass@localhost:3306/db`
+## Notes
 
-### MariaDB
-- Port: `MARIADB_PORT` (3307, żeby działała obok MySQL)
-- Użytkownik / hasło: `MARIADB_USER` / `MARIADB_PASSWORD` (root: `MARIADB_ROOT_PASSWORD`)
-- Baza: `MARIADB_DATABASE`
-- URL: `mysql://user:pass@localhost:3307/db` (MariaDB jest kompatybilna z klientami MySQL)
-
-### SQL Server
-- Port: `MSSQL_PORT` (1433)
-- Użytkownik / hasło: `sa` / `MSSQL_SA_PASSWORD` (min. 8 znaków, wielkie i małe litery, cyfry lub znaki specjalne; za słabe hasło = kontener się nie uruchomi)
-- Baza: obraz nie tworzy bazy sam, utwórz ją po starcie (`CREATE DATABASE nazwa;`)
-- Connection string: `Server=localhost,1433;User Id=sa;Password=...;TrustServerCertificate=True`
-- Edycja Developer (darmowa do developmentu). Obraz jest tylko na amd64, na Macu z M-chipem działa przez emulację, więc wolniej.
-
-### Redis
-- Port: `REDIS_PORT` (6379)
-- Hasło: `REDIS_PASSWORD` (bez użytkownika, logujesz się jako `default`)
-- Dane zapisywane na dysk (AOF), więc przetrwają restart kontenera
-- URL: `redis://:pass@localhost:6379/0`
-
-### MongoDB
-- Port: `MONGO_PORT` (27017)
-- Użytkownik / hasło: `MONGO_USER` / `MONGO_PASSWORD` (to konto root, zapisane w bazie `admin`)
-- Baza: `MONGO_DATABASE` (domyślna baza dla skryptów startowych, sama baza pojawi się przy pierwszym zapisie)
-- URL: `mongodb://user:pass@localhost:27017/db?authSource=admin`
-
-## Panele do przeglądania baz
-
-### Adminer
-Jeden lekki panel w przeglądarce dla PostgreSQL, MySQL i MariaDB.
-- Adres: http://localhost:8080 (`ADMINER_PORT`)
-- Logowanie: wybierz system, jako **Serwer** wpisz nazwę usługi z compose (`postgres`, `mysql`, `mariadb`), a nie `localhost`, bo Adminer działa w swoim kontenerze
-- Do SQL Server i MongoDB użyj innego narzędzia (np. DBeaver, MongoDB Compass)
-
-### pgAdmin
-Rozbudowany panel tylko dla PostgreSQL.
-- Adres: http://localhost:5050 (`PGADMIN_PORT`)
-- Logowanie: `PGADMIN_EMAIL` / `PGADMIN_PASSWORD` (e-mail musi mieć poprawny format, np. `admin@example.com`)
-- Dodanie serwera: Host `postgres`, port `5432`, użytkownik i hasło z `POSTGRES_USER` / `POSTGRES_PASSWORD`
+- **SQL Server:** the password needs at least 8 characters with uppercase, lowercase and digits or symbols, otherwise the container won't start. There is no arm64 image, so it runs under emulation on Apple Silicon.
+- **MongoDB:** the user is created in the `admin` database, so connect with `?authSource=admin`.
+- **pgAdmin:** `PGADMIN_EMAIL` must be a valid email address, e.g. `admin@example.com`.
+- **Adminer / pgAdmin:** to connect to a database, use the service name as the host (`postgres`, `mysql`, `mariadb`), not `localhost`.
