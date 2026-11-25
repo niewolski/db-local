@@ -36,3 +36,10 @@ Host zawsze `localhost`, port to zmienna `*_PORT` z `.env` (w nawiasie wartość
 - Użytkownik / hasło: `MARIADB_USER` / `MARIADB_PASSWORD` (root: `MARIADB_ROOT_PASSWORD`)
 - Baza: `MARIADB_DATABASE`
 - URL: `mysql://user:pass@localhost:3307/db` (MariaDB jest kompatybilna z klientami MySQL)
+
+### SQL Server
+- Port: `MSSQL_PORT` (1433)
+- Użytkownik / hasło: `sa` / `MSSQL_SA_PASSWORD` (min. 8 znaków, wielkie i małe litery, cyfry lub znaki specjalne; za słabe hasło = kontener się nie uruchomi)
+- Baza: obraz nie tworzy bazy sam, utwórz ją po starcie (`CREATE DATABASE nazwa;`)
+- Connection string: `Server=localhost,1433;User Id=sa;Password=...;TrustServerCertificate=True`
+- Edycja Developer (darmowa do developmentu). Obraz jest tylko na amd64, na Macu z M-chipem działa przez emulację, więc wolniej.

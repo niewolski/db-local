@@ -59,7 +59,30 @@ services:
   #     timeout: 5s
   #     retries: 10
 
+  # =================== SQL Server =====================
+  # # Obraz jest tylko na amd64: na Macu z M-chipem działa przez emulację (Rosetta w Docker Desktop)
+  # sqlserver:
+  #   image: mcr.microsoft.com/mssql/server:2022-latest
+  #   platform: linux/amd64
+  #   container_name: sqlserver-local
+  #   restart: unless-stopped
+  #   ports:
+  #     - "${MSSQL_PORT:-1433}:1433"
+  #   environment:
+  #     ACCEPT_EULA: "Y"
+  #     MSSQL_PID: Developer
+  #     MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD}
+  #   volumes:
+  #     - sqlserver_data:/var/opt/mssql
+  #   healthcheck:
+  #     test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P \"$$MSSQL_SA_PASSWORD\" -C -Q \"SELECT 1\" -b"]
+  #     interval: 10s
+  #     timeout: 5s
+  #     retries: 10
+  #     start_period: 20s
+
 # volumes:
 #   postgres_data:   # PostgreSQL
 #   mysql_data:      # MySQL
 #   mariadb_data:    # MariaDB
+#   sqlserver_data:  # SQL Server
