@@ -63,3 +63,9 @@ Jeden lekki panel w przeglądarce dla PostgreSQL, MySQL i MariaDB.
 - Adres: http://localhost:8080 (`ADMINER_PORT`)
 - Logowanie: wybierz system, jako **Serwer** wpisz nazwę usługi z compose (`postgres`, `mysql`, `mariadb`), a nie `localhost`, bo Adminer działa w swoim kontenerze
 - Do SQL Server i MongoDB użyj innego narzędzia (np. DBeaver, MongoDB Compass)
+
+### pgAdmin
+Rozbudowany panel tylko dla PostgreSQL.
+- Adres: http://localhost:5050 (`PGADMIN_PORT`)
+- Logowanie: `PGADMIN_EMAIL` / `PGADMIN_PASSWORD` (e-mail musi mieć poprawny format, np. `admin@example.com`)
+- Dodanie serwera: Host `postgres`, port `5432`, użytkownik i hasło z `POSTGRES_USER` / `POSTGRES_PASSWORD`
